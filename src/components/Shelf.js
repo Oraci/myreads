@@ -35,7 +35,7 @@ const Li = styled.li`
 
 class Shelf extends Component {
   render() {
-    const {title, books} = this.props;
+    const {title, books, updateBookShelf} = this.props;
     
     return (
       <Bookshelf>
@@ -48,6 +48,7 @@ class Shelf extends Component {
                 <Book
                   key={book.id}
                   book={book}
+                  updateBookShelf={updateBookShelf}
                 />
               </Li>
             ))

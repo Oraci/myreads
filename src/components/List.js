@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import {getAll} from '../api/BooksAPI';
+import * as BooksAPI from '../api/BooksAPI';
 import styled from 'styled-components';
 import Shelf from './Shelf';
 import Search from './Search';
 import img from '../icons/add.svg';
 
-const ListBooks = styled.div``;
+const ListBooks = styled.div`
+  height: 100%;
+  width: 100%;
+`;
 
 const ListBooksTitle = styled.div`
   padding: 10px 0;
@@ -51,7 +54,16 @@ class List extends Component {
   }
 
   componentDidMount() {
-    getAll().then(books => this.setState({books}));
+    BooksAPI.getAll().then(books => this.setState({books}));
+  }
+
+  onUpdateBook = (book, shelf) => {
+    book.shelf = shelf
+    this.setState(prevState => ({
+      books: prevState.books.filter((b) => b.id !== book.id).concat([book])
+    }));
+
+    BooksAPI.update(book, shelf);
   }
 
   render() {
@@ -79,6 +91,7 @@ class List extends Component {
               key={index}
               title={title}
               books={books}
+              updateBookShelf={this.onUpdateBook}
             />
           ))
         }

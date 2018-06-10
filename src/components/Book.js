@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import BookChanger from './BookChanger';
 
 const BookContainer = styled.div`
   width: 140px;
@@ -35,9 +36,15 @@ const BookCoverImg = styled.img`
 `;
 
 class Book extends Component {
+  updateBookShelf(state) {
+    const {book, updateBookShelf} = this.props;
+
+    updateBookShelf(book, state);
+  }
+
   render() {
     const {book} = this.props;
-    const {title, authors = [], imageLinks : {thumbnail} = {}} = book; 
+    const {title, authors = [], imageLinks : {thumbnail} = {}, shelf} = book;
 
     return (
       <BookContainer>
@@ -45,6 +52,10 @@ class Book extends Component {
           <BookCover>
             <BookCoverImg src={thumbnail} />
           </BookCover>
+          <BookChanger
+            shelf={shelf}
+            onChangeBook={(state) => this.updateBookShelf(state)}
+          />
         </BookContainerTop>
         <BookTitle>{title}</BookTitle>
         {
