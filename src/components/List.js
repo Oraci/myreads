@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import Shelf from './Shelf';
-import Search from './Search';
 import img from '../icons/add.svg';
 
 const ListBooks = styled.div`
@@ -12,7 +11,7 @@ const ListBooks = styled.div`
 
 const ListBooksTitle = styled.div`
   padding: 10px 0;
-  background: #2e7c31;
+  background: #f2af1e;
   text-align: center;
 `;
 
@@ -37,8 +36,8 @@ const OpenSearchLink = styled(Link)`
   display: block;
   width: 50px;
   height: 50px;
-  border-radius: 50%;
-  background: #2e7d32;
+  border-radius: 100% / 50%;
+  background: #f2af1e;
   background-image: url(${img});
   background-repeat: no-repeat;
   background-position: center;
@@ -57,7 +56,7 @@ class List extends Component {
 
     const shelves = [
       {title: "Currently Reading", books: currentlyReading},
-      {title: "Want to read", books: wantToRead},
+      {title: "Want to Read", books: wantToRead},
       {title: "Read", books: read}
     ];
 

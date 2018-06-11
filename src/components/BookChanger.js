@@ -5,11 +5,11 @@ import styled from 'styled-components';
 const BookChangerContent = styled.div`
   position: absolute;
   right: 0;
-  bottom: -10px;
+  bottom: -8px;
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background: #60ac5d;
+  border-radius: 100% / 50%;
+  background: #f2af1e;
   background-image: url(${img});
   background-repeat: no-repeat;
   background-position: center;
@@ -22,6 +22,10 @@ const BookChangerSelect = styled.select`
   height: 100%;
   opacity: 0;
   cursor: pointer;
+
+  option:checked, option:hover {
+    color: #f2af1e;
+  }
 `;
 
 class BookChanger extends Component {

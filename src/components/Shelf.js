@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import Book from './Book';
+import BooksGrid from './BooksGrid';
 
 const Bookshelf = styled.div`
   padding: 0 10px 20px;
@@ -11,27 +12,12 @@ const Bookshelf = styled.div`
 `;
 
 const Title = styled.h2`
-  border-bottom: 1px solid #dedede;
+  border-bottom: 3px solid #f2af1e;
 `;
 
 const BookshelfBooks = styled.div`
   text-align: center;
 `;
-
-const BooksGrid = styled.ol`
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-`;
-
-const Li = styled.li`
-  padding: 10px 15px;
-  text-align: left;
-`; 
 
 class Shelf extends Component {
   render() {
@@ -39,18 +25,18 @@ class Shelf extends Component {
     
     return (
       <Bookshelf>
-        <Title>{title}</Title>
+        <Title>{title} {books.length > 0 && '(' + books.length + ')'}</Title>
         <BookshelfBooks>
           <BooksGrid>
           {
             books.map(book => (
-              <Li key={book.id}>
+              <li key={book.id}>
                 <Book
                   key={book.id}
                   book={book}
                   updateBookShelf={updateBookShelf}
                 />
-              </Li>
+              </li>
             ))
           }
           </BooksGrid>

@@ -14,6 +14,7 @@ const BookContainerTop = styled.div`
 `;
 
 const BookTitle = styled.div`
+  font-weight: bold;
   font-size: 0.8em;
   margin-top: 10px;
 `;
