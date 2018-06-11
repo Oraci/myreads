@@ -69,13 +69,20 @@ class Search extends Component {
     searchBooks: []
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.input.focus();
   }
 
   onUpdateQuery = (query) => {
-    if (query) {
-      search(query).then((searchResults) => {
+    this.setState({query});
+
+    if (!query) {
+      this.setState({searchBooks: []});
+      return;
+    }
+
+    search(query).then((searchResults) => {
+      if (query === this.state.query) {
         if (searchResults && searchResults.length) {
           const searchBooks = searchResults.map(result => {
             result.shelf = this.setShelf(result);
@@ -86,10 +93,8 @@ class Search extends Component {
         } else {
           this.setState({searchBooks: []});
         }
-      });
-    } else {
-      this.setState({searchBooks: []});
-    }
+      }
+    });
   }
 
   setShelf(result) {
