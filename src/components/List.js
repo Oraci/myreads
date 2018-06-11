@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
-import * as BooksAPI from '../api/BooksAPI';
 import styled from 'styled-components';
 import Shelf from './Shelf';
 import Search from './Search';
@@ -49,25 +48,8 @@ const OpenSearchLink = styled(Link)`
 `;
 
 class List extends Component {
-  state = {
-    books: []
-  }
-
-  componentDidMount() {
-    BooksAPI.getAll().then(books => this.setState({books}));
-  }
-
-  onUpdateBook = (book, shelf) => {
-    book.shelf = shelf
-    this.setState(prevState => ({
-      books: prevState.books.filter((b) => b.id !== book.id).concat([book])
-    }));
-
-    BooksAPI.update(book, shelf);
-  }
-
   render() {
-    const {books} = this.state;
+    const {books, updateBookShelf} = this.props;
 
     const currentlyReading = books.filter(book => book.shelf === 'currentlyReading')
     const wantToRead = books.filter(book => book.shelf === 'wantToRead');
@@ -91,15 +73,13 @@ class List extends Component {
               key={index}
               title={title}
               books={books}
-              updateBookShelf={this.onUpdateBook}
+              updateBookShelf={updateBookShelf}
             />
           ))
         }
         </ListBooksContent>
         <OpenSearchContent>
-          <OpenSearchLink
-            to="/search"
-          ></OpenSearchLink>
+          <OpenSearchLink to="/search" />
         </OpenSearchContent>
       </ListBooks>
     )

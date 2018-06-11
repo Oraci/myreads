@@ -3,6 +3,7 @@ import {Route} from 'react-router-dom';
 import styled from 'styled-components';
 import Search from './components/Search';
 import List from './components/List';
+import * as BooksAPI from './api/BooksAPI';
 
 const Main = styled.div`
   width: 100%;
@@ -17,11 +18,41 @@ const Body = styled.div`
 `;
 
 class BooksApp extends Component {
+  state = {
+    books: []
+  }
+
+  componentDidMount() {
+    BooksAPI.getAll().then(books => this.setState({books}));
+  }
+
+  onUpdateBook = (book, shelf) => {
+    book.shelf = shelf
+    this.setState(prevState => ({
+      books: prevState.books.filter((b) => b.id !== book.id).concat([book])
+    }));
+
+    BooksAPI.update(book, shelf);
+  }
+
   render() {
+    const {books} = this.state;
+
     return (
       <Main>
         <Body>
-          <Route exact path="/" component={List} />
+          <Route exact path="/" render={() => (
+            <List
+              books={books}
+              updateBookShelf={this.onUpdateBook}
+            />
+          )} />
+          <Route path="/search" render={() => (
+            <Search
+              books={books}
+              updateBookShelf={this.onUpdateBook}
+            />
+          )} />
         </Body>
       </Main>
     )
